@@ -1,13 +1,12 @@
 <?php
 /*
-Plugin Name: reCAPTCHA for MW WP Form
+Plugin Name: reCAPTCHA for MW WP Form (Append threshold settings)
 Description: You can use reCAPTCHA v3 on the MW WP Form.
 Author: Nakashima Masahiro
 Version: 1.0.2
-Plugin URI: https://github.com/kanakogi/recaptcha-for-mw-wp-form
-Author URI: https://flipclap.co.jp
+Plugin URI: https://github.com/abatanx/recaptcha-for-mw-wp-form
 License: GPLv2 or later
-Text Domain: mwfrv3
+Text Domain: mwfrv3ats
  */
 
 use MW_WP_Form_reCAPTCHA\Controllers\AdminController;
@@ -28,6 +27,7 @@ if (is_plugin_active('mw-wp-form/mw-wp-form.php')) {
             // 'is_recaptcha' => '',
             'site_key' => '',
             'secret_key' => '',
+			'threshold_score' => ''
         );
 
         public function __construct()
