@@ -18,10 +18,13 @@ class MW_WP_Form_ReCaptchaV3_Validation extends MW_WP_Form_Abstract_Validation_R
      */
     public function rule($name, array $options = array())
     {
+		if( strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST' ) return '';
+
         /**
          * 入力値を取得
          */
         $value = $this->Data->get($name);
+        $value = !empty($value) ? $value : '';
 
         /**
          * 設定値は $options から取得
@@ -44,7 +47,7 @@ class MW_WP_Form_ReCaptchaV3_Validation extends MW_WP_Form_Abstract_Validation_R
                 return $options['message'];
             }
 
-            if (isset($value) && $value != '' && $name == 'recaptcha-v3' && isset($_POST['recaptcha-v3']) && !isset($_POST['submitBack'])) {
+            if ($name == 'recaptcha-v3' && !isset($_POST['submitBack'])) {
                 $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $value;
                 $response = wp_remote_get($url);
                 if (!is_wp_error($response) && $response["response"]["code"] === 200) {
@@ -79,6 +82,8 @@ class MW_WP_Form_ReCaptchaV3_Validation extends MW_WP_Form_Abstract_Validation_R
                 }
             }
         }
+
+        return '';
     }
 
     /**
